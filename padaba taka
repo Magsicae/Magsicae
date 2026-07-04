@@ -1,0 +1,84 @@
+import time
+import sys
+
+try:
+    from colorama import init, Fore, Style  # type: ignore
+except ImportError:
+    def init(autoreset=False):
+        return None
+
+    class _Fore:
+        YELLOW = ''
+        RED = ''
+        LIGHTRED_EX = ''
+        BROWN = ''
+
+    class _Style:
+        NORMAL = ''
+        BRIGHT = ''
+
+    Fore = _Fore()
+    Style = _Style()
+
+# Initialize colors
+init(autoreset=True)
+
+# ----------------------
+# SETTINGS
+# ----------------------
+LETTER_DELAY_NORMAL = 0.08   # Normal speed
+LETTER_DELAY_SLOW = 0.25     # Slow speed = ~10 sec for the last line
+LINE_PAUSE = 1.2
+SPACE_PAUSE = 0.8
+
+# ----------------------
+# LYRICS (EXACT SAME)
+# ----------------------
+lyrics = [
+    "Mahal kita",
+    "Walang ibang gugustuhin, kundi ikaw",
+    "",
+    "Mamahalin kita",
+    "Hanggang sa ating pagtanda",
+    "",
+    "Walang ibang mamahalin, kundi ikaw"  # This one will be slow
+]
+
+# ----------------------
+# FUNCTION TO TYPE TEXT SMOOTHLY
+# ----------------------
+def type_text(text, color=Fore.BROWN + Style.NORMAL, delay=LETTER_DELAY_NORMAL):
+    for char in text:
+        sys.stdout.write(color + char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()
+
+# ----------------------
+# DISPLAY HEADER
+# ----------------------
+print("\n" + Fore.YELLOW + "✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧")
+print(Fore.RED + Style.BRIGHT + "          🎶  P A D A B A  T A K A  🎶")
+print(Fore.LIGHTRED_EX + "              Lyrics Display")
+print(Fore.YELLOW + "✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧\n")
+
+# ----------------------
+# SHOW LYRICS ONE BY ONE
+# ----------------------
+for line in lyrics:
+    if line == "":
+        time.sleep(SPACE_PAUSE)
+        print()
+    else:
+        # Apply slow speed ONLY to the last line
+        if line == "Walang ibang mamahalin, kundi ikaw":
+            type_text(f"        {line}", delay=LETTER_DELAY_SLOW)
+        else:
+            type_text(f"        {line}")
+        time.sleep(LINE_PAUSE)
+
+# ----------------------
+# FOOTER
+# ----------------------
+print("\n" + Fore.YELLOW + "✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧")
+print(Fore.YELLOW + "                 ❤️  WHATALF?  ❤️\n")
